@@ -7,7 +7,7 @@ We propose to create an App using the services shared by The Movie DB presenting
 This is a Training Project think to cover basic concepts for iOS development. 
 
 ### Trainee
-Mateo Echeverri - mateo.echeverri@globant.com
+Mateo Echeverri - mateo.echeverri@globant.com 
 
 ## Attribution
 This product uses the TMDb API but is not endorsed or certified by TMDb.
