@@ -14,19 +14,22 @@ class SearchMovieRequest {
     
     static func makeRequest(query: String) {
         
-        let string1 = "https://api.themoviedb.org/3/search/movie?api_key=1f4d7de5836b788bdfd897c3e0d0a24b&language=en-US&query=\(query)&page=1&include_adult=false"
-        let url = string1.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)
+        let queryString = "https://api.themoviedb.org/3/search/movie?api_key=1f4d7de5836b788bdfd897c3e0d0a24b&language=en-US&query=\(query)&page=1&include_adult=false"
+        let queryUrl = queryString.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)
         
-        Alamofire.request(url!).responseJSON { response in
-            if let json = response.result.value as? [String: Any] {
-                var response = SearchMovieResponse(json: json)
-                print(response.resultsNumber)
-            }
+        guard let url = queryUrl else{print("The url could not be parsed correctly"); return}
+        
+        Alamofire.request(url).responseJSON { response in
+            guard let json = response.result.value as? [String: Any] else {print("the JSON object could not be casted [String:Any]"); return}
+            let response = SearchMovieResponse(json: json)
+            print(response.resultsNumber)
+            
         }
     }
 }
 
 class SearchMovieResponse {
+    
     var resultsNumber: Int
     var resultsList: [Movie] = []
     
