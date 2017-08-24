@@ -21,7 +21,7 @@ class SearchMovieRequest {
         
         Alamofire.request(url).responseJSON { response in
             guard let json = response.result.value as? [String: Any] else {print("the JSON object could not be casted [String:Any]"); return}
-            let response = SearchMovieResponse(json: json)
+            let response = SearchMovieResponse(searchJSON: json)
             print(response.resultsNumber)
             
         }
@@ -33,10 +33,10 @@ class SearchMovieResponse {
     var resultsNumber: Int
     var resultsList: [Movie] = []
     
-    init(json: [String:Any]) {
-        self.resultsNumber = (json["total_results"] as? Int) ?? 0
-        for movie in (json["results"] as? [[String:AnyObject]]) ?? [] {
-            self.resultsList.append(Movie(json: movie))
+    init(searchJSON: [String:Any]) {
+        self.resultsNumber = (searchJSON["total_results"] as? Int) ?? 0
+        for movie in (searchJSON["results"] as? [[String:Any]]) ?? [] {
+            self.resultsList.append(Movie(movieJSON: movie))
         }
         print((resultsList.first?.movieTitle)!)
     }
@@ -48,10 +48,10 @@ class Movie {
     var movieRating: Float
     var movieId: Int
     
-    init(json: [String:Any]) {
-        self.movieTitle = (json["original_title"] as? String) ?? " "
-        self.movieRating = (json["vote_average"] as? Float) ?? 0.0
-        self.movieId = (json["id"] as? Int) ?? 0
+    init(movieJSON: [String:Any]) {
+        self.movieTitle = (movieJSON["original_title"] as? String) ?? " "
+        self.movieRating = (movieJSON["vote_average"] as? Float) ?? 0.0
+        self.movieId = (movieJSON["id"] as? Int) ?? 0
     }
     
 }
