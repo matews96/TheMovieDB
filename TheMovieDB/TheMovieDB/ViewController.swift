@@ -12,15 +12,19 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       SearchMovieRequest.makeRequest(query: "Harry Potter")
+        SearchMovieRequest.makeRequest(query: "Harry Potter") { response in
+            guard let movies = response?.resultsList else {
+                return
+            }
+            print(movies)
+            
+        }
 
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    
+    }    
 }
 

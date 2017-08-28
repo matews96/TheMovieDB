@@ -12,7 +12,10 @@ import Alamofire
 
 class SearchMovieRequest {
     
-    static func makeRequest(query: String) {
+    
+    static func makeRequest(query: String, handler: @escaping (SearchMovieResponse?) -> Void) {
+        
+
         
         let queryString = "https://api.themoviedb.org/3/search/movie?api_key=1f4d7de5836b788bdfd897c3e0d0a24b&language=en-US&query=\(query)&page=1&include_adult=false"
         let queryUrl = queryString.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)
@@ -20,13 +23,20 @@ class SearchMovieRequest {
         guard let url = queryUrl else{print("The url could not be parsed correctly"); return}
         
         Alamofire.request(url).responseJSON { response in
-            guard let json = response.result.value as? [String: Any] else {print("the JSON object could not be casted [String:Any]"); return}
+            guard let json = response.result.value as? [String: Any] else {
+                handler(nil)
+                print("the JSON object could not be casted [String:Any]")
+                return
+            }
+            
             let response = SearchMovieResponse(searchJSON: json)
             print(response.resultsNumber)
-            
+            handler(response)
         }
     }
 }
+
+// Cosas del modelo
 
 class SearchMovieResponse {
     
