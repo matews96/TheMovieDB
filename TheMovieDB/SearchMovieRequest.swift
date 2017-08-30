@@ -48,7 +48,7 @@ class SearchMovieResponse {
         for movie in (searchJSON["results"] as? [[String:Any]]) ?? [] {
             self.resultsList.append(Movie(movieJSON: movie))
         }
-        print((resultsList.first?.movieTitle)!)
+        //print((resultsList.first?.movieTitle)!)
     }
 }
 

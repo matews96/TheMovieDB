@@ -8,16 +8,47 @@
 
 import UIKit
 
-class MovieSearchTableViewController: UITableViewController {
+class MovieSearchTableViewController: UITableViewController, UISearchBarDelegate {
 
+    var movies: [Movie]?
+    @IBOutlet weak var movieSearchBar: UISearchBar!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        movieSearchBar.delegate = self
+
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    
+    
+    func search(_ searchQuery: String){
+        
+        SearchMovieRequest.makeRequest(query: searchQuery) { response in
+            guard let movies = response?.resultsList else {
+                return
+            }
+            print(movies)
+            
+            self.movies = movies
+            
+            self.tableView.reloadData()
+            
+            
+        }
+        
+        
+    }
+    
+   func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
+        print("hola")
+        search(movieSearchBar?.text ?? "")
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -29,23 +60,25 @@ class MovieSearchTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return movies?.count ?? 0
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Movie Cell", for: indexPath)
 
-        // Configure the cell...
-
+        cell.textLabel?.text = movies?[indexPath.row].movieTitle ?? ""
+        cell.detailTextLabel?.text = String(movies?[indexPath.row].movieRating ?? 0)
+        
+        
         return cell
     }
-    */
+ 
 
     /*
     // Override to support conditional editing of the table view.
