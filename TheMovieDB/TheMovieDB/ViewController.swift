@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        SearchMovieRequest.makeRequest(query: "Harry Potter") { response in
+        MoviesApiFacade.makeRequest(query: "Harry Potter") { response in
             guard let movies = response?.resultsList else {
                 return
             }

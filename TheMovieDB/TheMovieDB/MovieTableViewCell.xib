@@ -16,21 +16,20 @@
             <rect key="frame" x="0.0" y="0.0" width="599" height="180"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="599" height="179"/>
+                <rect key="frame" x="0.0" y="0.0" width="599" height="179.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="AI2-d3-Wdq">
-                        <rect key="frame" x="8" y="8" width="583" height="154"/>
+                        <rect key="frame" x="8" y="8" width="583" height="163.5"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="G3Q-BR-LV8">
-                                <rect key="frame" x="8" y="8" width="100" height="138"/>
+                                <rect key="frame" x="8" y="13" width="100" height="138"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="150" id="F7T-hh-LtQ"/>
                                     <constraint firstAttribute="width" constant="100" id="vRD-ha-QNk"/>
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="34" translatesAutoresizingMaskIntoConstraints="NO" id="Q4H-op-mHl">
-                                <rect key="frame" x="116" y="39" width="459" height="76"/>
+                                <rect key="frame" x="116" y="44" width="459" height="76"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="55W-1y-8CE">
                                         <rect key="frame" x="0.0" y="0.0" width="459" height="21.5"/>
@@ -52,9 +51,6 @@
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <constraints>
-                            <constraint firstItem="G3Q-BR-LV8" firstAttribute="leading" secondItem="AI2-d3-Wdq" secondAttribute="leading" constant="8" id="xwe-k4-Prj"/>
-                        </constraints>
                         <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
                     </stackView>
                 </subviews>

@@ -52,7 +52,7 @@ class MovieSearchTableViewController: UITableViewController, UISearchBarDelegate
     
     func search(_ searchQuery: String){
         
-        SearchMovieRequest.makeRequest(query: searchQuery) { response in
+        MoviesApiFacade.makeRequest(query: searchQuery) { response in
             guard let movies = response?.resultsList else {
                 return
             }
@@ -62,7 +62,7 @@ class MovieSearchTableViewController: UITableViewController, UISearchBarDelegate
             
             for movie in self.movies!{
                 
-                SearchMovieRequest.getImage(queryUrl: "https://image.tmdb.org/t/p/w92/"+movie.movieImageUrl){ response in
+                MoviesApiFacade.getImage(queryUrl: "https://image.tmdb.org/t/p/w92/"+movie.movieImageUrl){ response in
                     
                     movie.movieImage = response
                     self.tableView.reloadData()
