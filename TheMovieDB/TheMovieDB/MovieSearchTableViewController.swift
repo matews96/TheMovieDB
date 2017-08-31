@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AlamofireImage
 
 class MovieSearchTableViewController: UITableViewController, UISearchBarDelegate {
     
@@ -20,7 +21,7 @@ class MovieSearchTableViewController: UITableViewController, UISearchBarDelegate
         super.viewDidLoad()
         
         tableView.register(UINib(nibName: "MovieTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "MovieTableViewCell")
-        tableView.rowHeight = 180
+      
         movieSearchBar.delegate = self
         
         
@@ -62,7 +63,7 @@ class MovieSearchTableViewController: UITableViewController, UISearchBarDelegate
             
             for movie in self.movies!{
                 
-                MoviesApiFacade.getImage(queryUrl: "https://image.tmdb.org/t/p/w92/"+movie.movieImageUrl){ response in
+                MoviesApiFacade.getImage(queryUrl: "https://image.tmdb.org/t/p/w92"+movie.movieImageUrl){ response in
                     
                     movie.movieImage = response
                     self.tableView.reloadData()
@@ -104,22 +105,24 @@ class MovieSearchTableViewController: UITableViewController, UISearchBarDelegate
         return movies?.count ?? 0
     }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 180
+    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
-        
+        let movie = movies![indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieTableViewCell", for: indexPath) as! MovieTableViewCell
         
         
-        cell.movieTitleLabel.text = movies?[indexPath.row].movieTitle ?? ""
-        cell.movieRatingLabel.text = "Rating: "+String(movies?[indexPath.row].movieRating ?? 0)
+        cell.movieTitleLabel.text = movie.movieTitle 
+        cell.movieRatingLabel.text = "Rating: "+String(movie.movieRating )
         cell.movieImage.image = movies?[indexPath.row].movieImage
         
         //cell.textLabel?.text = movies?[indexPath.row].movieTitle ?? ""
         //cell.detailTextLabel?.text = String(movies?[indexPath.row].movieRating ?? 0)
-        
-        
+       // cell.movieImage.af_setImage(withURL: URL(string: "https://image.tmdb.org/t/p/w92" + movie.movieImageUrl)!)
         return cell
     }
     

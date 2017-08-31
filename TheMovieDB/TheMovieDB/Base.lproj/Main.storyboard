@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="RrT-7q-27j">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FX2-h9-if9">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -35,25 +35,102 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Doc-6D-cM8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="173.59999999999999" y="-226.23688155922042"/>
+            <point key="canvasLocation" x="-392.80000000000001" y="-673.31334332833592"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="Myu-AC-vKZ">
+        <!--Tab Bar Controller-->
+        <scene sceneID="tAZ-XW-Zuw">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="RrT-7q-27j" sceneMemberID="viewController">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tfo-li-op0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tabBarController id="FX2-h9-if9" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="O0R-jn-wTd"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="N9a-3d-efK">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" red="0.24311259388923645" green="0.24315303564071655" blue="0.24310377240180969" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" red="0.53299158811569214" green="1" blue="0.38832229375839233" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.058250592747315588" green="0.055928327364856097" blue="0.016965173023666794" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="selectedImageTintColor" red="0.21904569864273071" green="0.76903456449508667" blue="0.28233560919761658" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="210-Xk-niA" kind="relationship" relationship="viewControllers" id="YHh-Oy-BiW"/>
+                        <segue destination="Prv-mF-xpK" kind="relationship" relationship="viewControllers" id="FQq-B3-Ohs"/>
+                    </connections>
+                </tabBarController>
+            </objects>
+            <point key="canvasLocation" x="-2460" y="-338"/>
+        </scene>
+        <!--Movie Search Navigation-->
+        <scene sceneID="LA4-1J-rOh">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zNK-G9-mlD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController title="Movie Search Navigation" automaticallyAdjustsScrollViewInsets="NO" id="210-Xk-niA" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" systemItem="search" id="eKE-SC-D9x"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="axS-3q-jVs">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="ty2-Xs-SSJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.058250592750000003" green="0.055928327360000002" blue="0.016965173020000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="0.53299158810000002" green="1" blue="0.3883222938" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="ka1-Qg-n2C" kind="relationship" relationship="rootViewController" id="ecO-5w-284"/>
+                        <segue destination="ka1-Qg-n2C" kind="relationship" relationship="rootViewController" id="2om-hD-0jS"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="NmS-Iv-FDM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-765.60000000000002" y="-226.23688155922042"/>
+            <point key="canvasLocation" x="-1332" y="-673.31334332833592"/>
+        </scene>
+        <!--Featured Movies-->
+        <scene sceneID="IrT-f3-pdO">
+            <objects>
+                <collectionViewController title="Featured Movies" id="Kxo-vg-CKZ" customClass="FeaturedMoviesCollectionViewController" customModule="TheMovieDB" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="1mN-dr-J19">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="k8L-17-0Qa">
+                            <size key="itemSize" width="50" height="50"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                        <connections>
+                            <outlet property="dataSource" destination="Kxo-vg-CKZ" id="lgT-La-PI4"/>
+                            <outlet property="delegate" destination="Kxo-vg-CKZ" id="pI9-Gw-xa1"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Featured Movies" id="zU6-ty-bZ9"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9hD-d8-Aj7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-393" y="91"/>
+        </scene>
+        <!--Featured Movies Navigation-->
+        <scene sceneID="02P-75-0YK">
+            <objects>
+                <navigationController title="Featured Movies Navigation" automaticallyAdjustsScrollViewInsets="NO" id="Prv-mF-xpK" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" systemItem="featured" id="wTx-5K-nMs"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="I2H-Ul-fvy">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="0.53299158810000002" green="1" blue="0.3883222938" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Kxo-vg-CKZ" kind="relationship" relationship="rootViewController" id="5NJ-Uc-ro1"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RIr-tq-Jjp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1332" y="75.112443778110944"/>
         </scene>
     </scenes>
 </document>
