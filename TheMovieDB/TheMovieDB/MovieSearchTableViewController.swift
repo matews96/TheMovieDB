@@ -67,6 +67,7 @@ class MovieSearchTableViewController: UITableViewController, UISearchBarDelegate
                     
                     movie.movieImage = response
                     self.tableView.reloadData()
+
                 }
                 
                 
@@ -86,6 +87,8 @@ class MovieSearchTableViewController: UITableViewController, UISearchBarDelegate
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         movieSearchBar.resignFirstResponder()
+        performSegue(withIdentifier: "fromMovieSearchToDetail", sender: self)
+
     }
     
     override func didReceiveMemoryWarning() {

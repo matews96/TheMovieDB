@@ -16,6 +16,12 @@ class FeaturedMoviesCollectionViewController: UICollectionViewController{
     
     var movies: [Movie]?
     
+    @IBOutlet weak var layout: UICollectionViewFlowLayout!
+
+    let size = CGSize(width: 175 , height: 285)
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         featured()
@@ -25,6 +31,15 @@ class FeaturedMoviesCollectionViewController: UICollectionViewController{
 
         // Register cell classes
         collectionView!.register(UINib(nibName: "MovieCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "MovieCollectionViewCell")
+        
+        
+        self.layout.itemSize = size
+        
+        self.layout.minimumInteritemSpacing = CGFloat(10)
+        
+        self.layout.minimumLineSpacing = CGFloat(10)
+        
+        self.layout.sectionInset = UIEdgeInsets(top: CGFloat(10), left: CGFloat(10), bottom: CGFloat(10), right: CGFloat(10))
         
         
 
@@ -49,7 +64,7 @@ class FeaturedMoviesCollectionViewController: UICollectionViewController{
             
             for movie in self.movies!{
                 
-                MoviesApiFacade.getImage(queryUrl: "https://image.tmdb.org/t/p/w92"+movie.movieImageUrl){ response in
+                MoviesApiFacade.getImage(queryUrl: "https://image.tmdb.org/t/p/w185"+movie.movieImageUrl){ response in
                     
                     movie.movieImage = response
                     self.collectionView!.reloadData()
@@ -98,6 +113,8 @@ class FeaturedMoviesCollectionViewController: UICollectionViewController{
     
         return cell
     }
+    
+
     
 
 

@@ -98,7 +98,7 @@ class MoviesApiFacade {
 
             if let image = response.result.value  {
                 movieImage = UIImage(data: image)
-            
+                
             }else{
                 print("error")
                 print(queryUrl)
