@@ -120,19 +120,48 @@ class FeaturedMoviesCollectionViewController: UICollectionViewController{
 
     // MARK: UICollectionViewDelegate
 
-    /*
+   
     // Uncomment this method to specify if the specified item should be highlighted during tracking
     override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
         return true
     }
-    */
-
-    /*
+  
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
+        performSegue(withIdentifier: "fromFeaturedToDetail", sender: movies?[indexPath.row])
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let guest = segue.destination as! DetailViewController
+        
+        guest.movie = sender as! Movie?
+        let id = String(guest.movie?.movieId ?? 0)
+        print(id)
+        
+        MoviesApiFacade.getImage(queryUrl: "https://image.tmdb.org/t/p/w500"+guest.movie!.movieImageUrl){ response in
+            
+            guest.movie?.movieImageBig = response
+            guest.viewDidLoad()
+            
+        }
+        MoviesApiFacade.makeDetailRequest(query: id) { response in
+            guard let overview = response else {
+                return
+            }
+            guest.movie?.movieDescription = overview
+            guest.viewDidLoad()
+            
+            
+        }
+        
+        
+    }
+    
+    
     // Uncomment this method to specify if the specified item should be selected
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         return true
     }
-    */
+    
 
     /*
     // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item

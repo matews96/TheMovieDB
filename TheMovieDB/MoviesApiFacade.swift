@@ -40,7 +40,7 @@ class MoviesApiFacade {
     }
     
     
-    
+
     
     
     static func configuration(handler:  @escaping (Configuration?) -> Void){
@@ -88,6 +88,32 @@ class MoviesApiFacade {
             handler(response)
             
 
+        }
+    }
+    
+    static func makeDetailRequest(query: String, handler: @escaping (String?) -> Void) {
+        
+        
+        
+        let queryString = "https://api.themoviedb.org/3/movie/\(query)?api_key=1f4d7de5836b788bdfd897c3e0d0a24b&language=en-US"
+        let queryUrl = queryString.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)
+        
+        guard let url = queryUrl else{print("The url could not be parsed correctly"); return}
+        
+        Alamofire.request(url).responseJSON { response in
+            guard let json = response.result.value as? [String: Any] else {
+                handler(nil)
+                print("the JSON object could not be casted [String:Any]")
+                return
+            }
+            
+            
+            
+            let response = json["overview"] as? String ?? "fil"
+           // print(response)
+            handler(response)
+            
+            
         }
     }
     

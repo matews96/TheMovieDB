@@ -50,6 +50,8 @@ class Movie {
     var movieId: Int
     var movieImage: UIImage?
     var movieImageUrl: String
+    var movieDescription: String?
+    var movieImageBig: UIImage?
     
     init(movieDic: [String:Any]) {
         

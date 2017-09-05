@@ -13,6 +13,7 @@ class MovieSearchTableViewController: UITableViewController, UISearchBarDelegate
     
     var movies: [Movie]?
     var base_url: String?
+
     
     @IBOutlet weak var movieSearchBar: UISearchBar!
     
@@ -21,7 +22,7 @@ class MovieSearchTableViewController: UITableViewController, UISearchBarDelegate
         super.viewDidLoad()
         
         tableView.register(UINib(nibName: "MovieTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "MovieTableViewCell")
-      
+        
         movieSearchBar.delegate = self
         
         
@@ -67,7 +68,7 @@ class MovieSearchTableViewController: UITableViewController, UISearchBarDelegate
                     
                     movie.movieImage = response
                     self.tableView.reloadData()
-
+                    
                 }
                 
                 
@@ -88,7 +89,7 @@ class MovieSearchTableViewController: UITableViewController, UISearchBarDelegate
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         movieSearchBar.resignFirstResponder()
         performSegue(withIdentifier: "fromMovieSearchToDetail", sender: self)
-
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -119,60 +120,54 @@ class MovieSearchTableViewController: UITableViewController, UISearchBarDelegate
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieTableViewCell", for: indexPath) as! MovieTableViewCell
         
         
-        cell.movieTitleLabel.text = movie.movieTitle 
+        cell.movieTitleLabel.text = movie.movieTitle
         cell.movieRatingLabel.text = "Rating: "+String(movie.movieRating )
         cell.movieImage.image = movies?[indexPath.row].movieImage
         
         //cell.textLabel?.text = movies?[indexPath.row].movieTitle ?? ""
         //cell.detailTextLabel?.text = String(movies?[indexPath.row].movieRating ?? 0)
-       // cell.movieImage.af_setImage(withURL: URL(string: "https://image.tmdb.org/t/p/w92" + movie.movieImageUrl)!)
+        // cell.movieImage.af_setImage(withURL: URL(string: "https://image.tmdb.org/t/p/w92" + movie.movieImageUrl)!)
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        
+        print(self.movies?[indexPath.row].movieDescription ?? "Fuck")
+        performSegue(withIdentifier: "fromMovieSearchToDetail", sender: movies?[indexPath.row])
+ 
+    }
     
-    /*
-     // Override to support conditional editing of the table view.
-     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the specified item to be editable.
-     return true
-     }
-     */
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let guest = segue.destination as! DetailViewController
+        
+        guest.movie = sender as! Movie?
+        let id = String(guest.movie?.movieId ?? 0)
+        print(id)
+        
+        MoviesApiFacade.getImage(queryUrl: "https://image.tmdb.org/t/p/w500"+guest.movie!.movieImageUrl){ response in
+            
+            guest.movie?.movieImageBig = response
+            guest.viewDidLoad()
+
+        }
+        MoviesApiFacade.makeDetailRequest(query: id) { response in
+            guard let overview = response else {
+                return
+            }
+            guest.movie?.movieDescription = overview
+            guest.viewDidLoad()
+
+        
+        }
+        
+        
+    }
     
-    /*
-     // Override to support editing the table view.
-     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-     if editingStyle == .delete {
-     // Delete the row from the data source
-     tableView.deleteRows(at: [indexPath], with: .fade)
-     } else if editingStyle == .insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-     }
-     }
-     */
-    
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-     
-     }
-     */
-    
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
-     return true
-     }
-     */
-    
-    /*
+
      // MARK: - Navigation
      
      // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+
+
     
 }
