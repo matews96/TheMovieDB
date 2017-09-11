@@ -25,59 +25,10 @@ class MovieSearchTableViewController: UITableViewController, UISearchBarDelegate
         
         movieSearchBar.delegate = self
         
-        
-        //        SearchMovieRequest.configuration(){ response in
-        //            guard let base_url = response?.baseUrl else {
-        //                print("Problems with conf")
-        //                return
-        //            }
-        //
-        //
-        //
-        //        }
-        
-        
-        
+
     }
     
-    //SearchMovieRequest.configuration(){ response in
     
-    
-    
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = false
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-    
-    
-    
-    func search(_ searchQuery: String){
-        
-        MoviesApiFacade.makeRequest(query: searchQuery) { response in
-            guard let movies = response?.resultsList else {
-                return
-            }
-            print(movies)
-            
-            self.movies = movies
-            
-            for movie in self.movies!{
-                
-                MoviesApiFacade.getImage(queryUrl: "https://image.tmdb.org/t/p/w92"+movie.movieImageUrl){ response in
-                    
-                    movie.movieImage = response
-                    self.tableView.reloadData()
-                    
-                }
-                
-                
-            }
-            
-        }
-        
-        
-    }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
         print("hola")
@@ -88,7 +39,6 @@ class MovieSearchTableViewController: UITableViewController, UISearchBarDelegate
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         movieSearchBar.resignFirstResponder()
-        performSegue(withIdentifier: "fromMovieSearchToDetail", sender: self)
         
     }
     
@@ -124,9 +74,6 @@ class MovieSearchTableViewController: UITableViewController, UISearchBarDelegate
         cell.movieRatingLabel.text = "Rating: "+String(movie.movieRating )
         cell.movieImage.image = movies?[indexPath.row].movieImage
         
-        //cell.textLabel?.text = movies?[indexPath.row].movieTitle ?? ""
-        //cell.detailTextLabel?.text = String(movies?[indexPath.row].movieRating ?? 0)
-        // cell.movieImage.af_setImage(withURL: URL(string: "https://image.tmdb.org/t/p/w92" + movie.movieImageUrl)!)
         return cell
     }
     
@@ -136,6 +83,12 @@ class MovieSearchTableViewController: UITableViewController, UISearchBarDelegate
         performSegue(withIdentifier: "fromMovieSearchToDetail", sender: movies?[indexPath.row])
  
     }
+    
+    
+    
+    // MARK: - Navigation
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let guest = segue.destination as! DetailViewController
@@ -151,10 +104,16 @@ class MovieSearchTableViewController: UITableViewController, UISearchBarDelegate
 
         }
         MoviesApiFacade.makeDetailRequest(query: id) { response in
-            guard let overview = response else {
+            guard let detailDic = response else {
                 return
             }
-            guest.movie?.movieDescription = overview
+            
+            guest.movie?.movieDescription = detailDic["overview"] as? String ?? "fil"
+            guest.movie?.releaseDate = detailDic["release_date"]  as? String ?? "fil"
+            guest.movie?.tagLine = detailDic["tagline"]  as? String ?? "fil"
+            guest.movie?.duration = String(detailDic["runtime"] as? Int ?? 0)
+            guest.movie?.releaseDate = detailDic["release_date"] as? String ?? "fil"
+            guest.movie?.voteCount = String(detailDic["vote_count"] as? Int ?? 0)
             guest.viewDidLoad()
 
         
@@ -162,11 +121,37 @@ class MovieSearchTableViewController: UITableViewController, UISearchBarDelegate
         
         
     }
+
+    
+    func search(_ searchQuery: String){
+        
+        MoviesApiFacade.makeRequest(query: searchQuery) { response in
+            guard let movies = response?.resultsList else {
+                return
+            }
+            print(movies)
+            
+            self.movies = movies
+            
+            for movie in self.movies!{
+                
+                MoviesApiFacade.getImage(queryUrl: "https://image.tmdb.org/t/p/w92"+movie.movieImageUrl){ response in
+                    
+                    movie.movieImage = response
+                    self.tableView.reloadData()
+                    
+                }
+                
+                
+            }
+            
+        }
+        
+        
+    }
     
 
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
+
 
 
     

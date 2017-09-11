@@ -91,7 +91,7 @@ class MoviesApiFacade {
         }
     }
     
-    static func makeDetailRequest(query: String, handler: @escaping (String?) -> Void) {
+    static func makeDetailRequest(query: String, handler: @escaping ([String: Any]?) -> Void) {
         
         
         
@@ -109,7 +109,7 @@ class MoviesApiFacade {
             
             
             
-            let response = json["overview"] as? String ?? "fil"
+            let response = json
            // print(response)
             handler(response)
             

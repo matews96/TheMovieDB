@@ -21,16 +21,23 @@ class TheMovieDBTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testMovieWithVoidDictionary() {
+        let movieDic = [String: Any]()
+        let movie = Movie(movieDic: movieDic)
+        
+        XCTAssertEqual(movie.movieTitle, " ")
+        XCTAssertEqual(movie.movieRating, 0.0)
+        XCTAssertEqual(movie.movieId, 0)
+        XCTAssertEqual(movie.movieImageUrl, " ")
+        
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testSearchMovieResponseWithVoidDictionary() {
+        let searchDic = [String: Any]()
+        let searchResponse = SearchMovieResponse(searchDic: searchDic)
+        
+        XCTAssertEqual(searchResponse.resultsNumber, 0)
+        XCTAssertEqual(searchResponse.resultsList.count, 0)
     }
     
 }

@@ -52,6 +52,10 @@ class Movie {
     var movieImageUrl: String
     var movieDescription: String?
     var movieImageBig: UIImage?
+    var releaseDate: String?
+    var duration: String?
+    var tagLine: String?
+    var voteCount: String?
     
     init(movieDic: [String:Any]) {
         

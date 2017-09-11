@@ -144,10 +144,15 @@ class FeaturedMoviesCollectionViewController: UICollectionViewController{
             
         }
         MoviesApiFacade.makeDetailRequest(query: id) { response in
-            guard let overview = response else {
+            guard let detailDic = response else {
                 return
             }
-            guest.movie?.movieDescription = overview
+            guest.movie?.movieDescription = detailDic["overview"] as? String ?? "fil"
+            guest.movie?.releaseDate = detailDic["release_date"]  as? String ?? "fil"
+            guest.movie?.tagLine = detailDic["tagline"]  as? String ?? "fil"
+            guest.movie?.duration = String(detailDic["runtime"] as? Int ?? 0)
+            guest.movie?.releaseDate = detailDic["release_date"] as? String ?? "fil"
+            guest.movie?.voteCount = String(detailDic["vote_count"] as? Int ?? 0)
             guest.viewDidLoad()
             
             
