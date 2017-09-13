@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import OHHTTPStubs
 @testable import TheMovieDB
 
 class TheMovieDBTests: XCTestCase {
@@ -39,5 +40,26 @@ class TheMovieDBTests: XCTestCase {
         XCTAssertEqual(searchResponse.resultsNumber, 0)
         XCTAssertEqual(searchResponse.resultsList.count, 0)
     }
+    
+    
+    
+    
+    func testSuccessResponse() {
+        let mockPage = 1
+        let mockResults = [Movie]()
+        let mockTotalResults = 20
+        let mockTotalPages = 2
+        
+        stub(condition: isHost("api.themoviedb.org")) { _ in
+            let mockMovieResponse: [String : Any] = [
+                "page" : mockPage,
+                "results" : mockResults,
+                "total_results" : mockTotalResults,
+                "total_pages" : mockTotalPages
+            ]
+            return OHHTTPStubsResponse(jsonObject: mockMovieResponse,
+                                       statusCode: 200,
+                                       headers: nil)
+        }
     
 }
