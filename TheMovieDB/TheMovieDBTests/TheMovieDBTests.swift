@@ -42,9 +42,7 @@ class TheMovieDBTests: XCTestCase {
     }
     
     
-    
-    
-    func testSuccessResponse() {
+    func testMakeFeaturedRequest() {
         let mockPage = 1
         let mockResults = [Movie]()
         let mockTotalResults = 20
@@ -61,5 +59,44 @@ class TheMovieDBTests: XCTestCase {
                                        statusCode: 200,
                                        headers: nil)
         }
+        
+        let waitingForService = expectation(description: "The movie db / movies call")
+        
+        MoviesApiFacade.makeFeaturedRequest(){ response in
+            XCTAssertEqual(response?.resultsNumber, mockTotalResults)
+            //XCTAssertEqual((response?.resultsList)!, mockResults)
+        }
+        waitingForService.fulfill()
+        waitForExpectations(timeout: 10, handler: nil)
+    }
+    
+    func testMakeRequest() {
+        let mockPage = 1
+        let mockResults = [Movie]()
+        let mockTotalResults = 20
+        let mockTotalPages = 2
+        
+        stub(condition: isHost("api.themoviedb.org")) { _ in
+            let mockMovieResponse: [String : Any] = [
+                "page" : mockPage,
+                "results" : mockResults,
+                "total_results" : mockTotalResults,
+                "total_pages" : mockTotalPages
+            ]
+            return OHHTTPStubsResponse(jsonObject: mockMovieResponse,
+                                       statusCode: 200,
+                                       headers: nil)
+        }
+        
+        let waitingForService = expectation(description: "The movie db / movies call")
+        
+        MoviesApiFacade.makeRequest(query: "Harry Potter"){ response in
+
+        }
+        waitingForService.fulfill()
+        waitForExpectations(timeout: 10, handler: nil)
+        
+        
+    }
     
 }
