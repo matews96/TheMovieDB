@@ -79,7 +79,6 @@ class MovieSearchTableViewController: UITableViewController, UISearchBarDelegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         
-        print(self.movies?[indexPath.row].movieDescription ?? "Fuck")
         performSegue(withIdentifier: "fromMovieSearchToDetail", sender: movies?[indexPath.row])
  
     }
@@ -95,7 +94,7 @@ class MovieSearchTableViewController: UITableViewController, UISearchBarDelegate
         
         guest.movie = sender as! Movie?
         let id = String(guest.movie?.movieId ?? 0)
-        print(id)
+        print(guest.movie?.movieTitle ?? "fil")
         
         MoviesApiFacade.getImage(queryUrl: "https://image.tmdb.org/t/p/w500"+guest.movie!.movieImageUrl){ response in
             
